@@ -1,0 +1,18 @@
+.buttonBlock{
+    display: inline-flex
+}
+.btnPadding{
+    padding: 5px
+  }
+.btn-reject{
+    color: #17a2b8;
+    background-color: #fff;
+    border-color: #17a2b8;
+    border-radius: 10
+  }
+  .btn-accept{
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+    border-radius: 10
+  }
