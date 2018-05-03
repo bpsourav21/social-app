@@ -7,11 +7,11 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import expressValidator from 'express-validator';
 import dotenv from 'dotenv';
-import exphbs from'express-handlebars';
-import mongoose from'mongoose';
-import jwt from'jsonwebtoken';
-import moment from'moment';
-import request from'request';
+import exphbs from 'express-handlebars';
+import mongoose from 'mongoose';
+import jwt from 'jsonwebtoken';
+import moment from 'moment';
+import request from 'request';
 
 import React from "react";
 import { renderToString } from "react-dom/server";
@@ -28,10 +28,16 @@ dotenv.load();
 
 const app = express();
 
+//socket.io installation
+// var http = require('http')
+// var socketio = require('socket.io');
+// var server = http.createServer(app);
+// var websocket = socketio.listen(server);
+
 
 // Connect With Mongodb
 mongoose.connect(process.env.MONGODB);
-mongoose.connection.on('error', function() {
+mongoose.connection.on('error', function () {
   console.log('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);
 });
@@ -41,13 +47,13 @@ mongoose.connection.on('error', function() {
 var hbs = exphbs.create({
   defaultLayout: 'main',
   helpers: {
-    ifeq: function(a, b, options) {
+    ifeq: function (a, b, options) {
       if (a === b) {
         return options.fn(this);
       }
       return options.inverse(this);
     },
-    toJSON : function(object) {
+    toJSON: function (object) {
       return JSON.stringify(object);
     }
   }
@@ -70,8 +76,8 @@ app.use(express.static(path.join('public')));
 // Models
 import User from '../app/Auth/userModel';
 
-app.use(function(req, res, next) {
-  req.isAuthenticated = function() {
+app.use(function (req, res, next) {
+  req.isAuthenticated = function () {
     var token = (req.headers.authorization && req.headers.authorization.split(' ')[1]) || req.cookies.token;
     try {
       return jwt.verify(token, process.env.TOKEN_SECRET);
@@ -82,7 +88,7 @@ app.use(function(req, res, next) {
 
   if (req.isAuthenticated()) {
     var payload = req.isAuthenticated();
-    User.findById(payload.sub, function(err, user) {
+    User.findById(payload.sub, function (err, user) {
       req.user = user;
       next();
     });
@@ -97,28 +103,17 @@ app.post('/signup', userController.signupPost);
 app.post('/login', userController.loginPost);
 app.put('/change-password', userController.ensureAuthenticated, userController.changePassword);
 app.put('/change-picture', userController.ensureAuthenticated, userController.changePicture);
-// app.post('/reset/:token', userController.resetPost);
-// app.get('/login-per-user/:id', userController.loginPerUser);
 
-// app.put('/account', userController.ensureAuthenticated, userController.accountPut);
-// app.delete('/account', userController.ensureAuthenticated, userController.accountDelete);
-// app.post('/forgot', userController.forgotPost);
 
-// app.get('/unlink/:provider', userController.ensureAuthenticated, userController.unlink);
-
-// app.post('/auth/facebook', userController.authFacebook);
-// app.get('/auth/facebook/callback', userController.authFacebookCallback);
-// app.post('/auth/google', userController.authGoogle);
-// app.get('/auth/google/callback', userController.authGoogleCallback);
+//socket.io codes go here
+// websocket.on('connection', (socket) => {
+//   console.log('A user is connected');
+// });
 
 
 
 
-
-
-
-
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var initialState = {
     auth: { token: req.cookies.token, user: req.user },
     messages: {}
@@ -157,13 +152,13 @@ app.use(function(req, res, next) {
 
 // Production error handler
 if (app.get('env') === 'production') {
-  app.use(function(err, req, res, next) {
+  app.use(function (err, req, res, next) {
     console.error(err.stack);
     res.sendStatus(err.status || 500);
   });
 }
 
-app.listen(app.get('port'), function() {
+app.listen(app.get('port'), function () {
   console.log('Server Start On Port ' + app.get('port'));
 });
 

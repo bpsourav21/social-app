@@ -65,7 +65,6 @@ class NewRoutes extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     token: state.auth.token,
     user: state.auth.user

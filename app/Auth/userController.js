@@ -7,6 +7,7 @@ import request from 'request';
 import qs from 'querystring';
 import User from './userModel';
 
+
 function generateToken(user) {
   var payload = {
     iss: 'my.domain.com',
@@ -82,7 +83,7 @@ export function signupPost(req, res, next) {
     user = new User({
       name: req.body.name,
       email: req.body.email,
-      password: req.body.password
+      password: req.body.password,
     });
     user.save(function (err) {
       const msg = { msg: 'Well Done! You successfully signup in to this website' }

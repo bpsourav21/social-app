@@ -89,68 +89,6 @@ export function logout(props) {
 
 }
 
-// export function forgotPassword(email) {
-//   return (dispatch) => {
-//     dispatch({
-//       type: 'CLEAR_MESSAGES'
-//     });
-//     return fetch('/forgot', {
-//       method: 'post',
-//       headers: { 'Content-Type': 'application/json' },
-//       body: JSON.stringify({ email: email })
-//     }).then((response) => {
-//       if (response.ok) {
-//         return response.json().then((json) => {
-//           dispatch({
-//             type: 'FORGOT_PASSWORD_SUCCESS',
-//             messages: [json]
-//           });
-//         });
-//       } else {
-//         return response.json().then((json) => {
-//           dispatch({
-//             type: 'FORGOT_PASSWORD_FAILURE',
-//             messages: Array.isArray(json) ? json : [json]
-//           });
-//         });
-//       }
-//     });
-//   };
-// }
-
-// export function resetPassword(password, confirm, pathToken) {
-//   return (dispatch) => {
-//     dispatch({
-//       type: 'CLEAR_MESSAGES'
-//     });
-//     return fetch(`/reset/${pathToken}`, {
-//       method: 'post',
-//       headers: { 'Content-Type': 'application/json' },
-//       body: JSON.stringify({
-//         password: password,
-//         confirm: confirm
-//       })
-//     }).then((response) => {
-//       if (response.ok) {
-//         return response.json().then((json) => {
-//           <Redirect to="/login" />
-//           dispatch({
-//             type: 'RESET_PASSWORD_SUCCESS',
-//             messages: [json]
-//           });
-//         });
-//       } else {
-//         return response.json().then((json) => {
-//           dispatch({
-//             type: 'RESET_PASSWORD_FAILURE',
-//             messages: Array.isArray(json) ? json : [json]
-//           });
-//         });
-//       }
-//     });
-//   };
-// }
-
 export function changeProfilePic(picture, token, props) {
   return (dispatch) => {
     dispatch({
@@ -226,28 +164,3 @@ export function changePassword(old_pass, password, confirm, token, props) {
     });
   };
 }
-
-// export function deleteAccount(token) {
-//   return (dispatch) => {
-//     dispatch({
-//       type: 'CLEAR_MESSAGES'
-//     });
-//     return fetch('/account', {
-//       method: 'delete',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         'Authorization': `Bearer ${token}`
-//       }
-//     }).then((response) => {
-//       if (response.ok) {
-//         return response.json().then((json) => {
-//           dispatch(logout());
-//           dispatch({
-//             type: 'DELETE_ACCOUNT_SUCCESS',
-//             messages: [json]
-//           });
-//         });
-//       }
-//     });
-//   };
-// }
